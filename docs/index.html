@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAPEval — A Decoupled Caption Evaluation across Understanding and Generation</title>
+  <meta name="description" content="CAPEval decomposes caption quality into Coverage (C) and Precision (P). Empirically, Coverage drives VLM understanding while Precision drives T2I generation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260730b" />
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a href="./"><img class="logo" src="assets/logo.png" alt="CAPEval" /></a>
+      <div class="nav-links">
+        <a href="./" aria-current="page">Home</a>
+        <a href="#abstract">Abstract</a>
+        <a href="#findings">Findings</a>
+        <a href="leaderboard/">Leaderboard</a>
+        <a href="https://huggingface.co/datasets/LiuzhipengUCAS/CAPEval">Dataset</a>
+        <a href="https://github.com/liuzhipenggg/CAPEval">Code</a>
+      </div>
+    </nav>
+
+    <header class="hero paper-hero">
+      <img class="logo-hero" src="assets/logo.png" alt="CAPEval" />
+      <h1>
+        <span class="title-line">A Decoupled Caption Evaluation across</span>
+        <span class="title-line">understanding and generation</span>
+      </h1>
+      <p class="authors">
+        <a href="mailto:liuzp@ihep.ac.cn">Zhipeng Liu</a><sup>1*</sup>
+        ·
+        Haochen Wang<sup>1,2*†</sup>
+        ·
+        Zhaoxiang Zhang<sup>1,2†</sup>
+      </p>
+      <p class="affil">
+        <sup>1</sup>University of Chinese Academy of Sciences
+        ·
+        <sup>2</sup>Institute of Automation, Chinese Academy of Sciences
+      </p>
+      <p class="affil-note">* Equal contribution &nbsp;† Corresponding authors</p>
+      <div class="actions">
+        <a class="btn btn-secondary" href="#abstract">Abstract</a>
+        <a class="btn btn-primary" href="https://github.com/liuzhipenggg/CAPEval">Code</a>
+        <a class="btn btn-secondary" href="https://huggingface.co/datasets/LiuzhipengUCAS/CAPEval">Dataset</a>
+        <a class="btn btn-secondary" href="leaderboard/">Leaderboard</a>
+        <a class="btn btn-secondary" aria-disabled="true" title="Coming soon">Paper (soon)</a>
+      </div>
+    </header>
+
+    <section class="section" id="abstract">
+      <h2>Abstract</h2>
+      <p class="prose">
+        Captions serve as a primary supervision signal for both multimodal understanding and text-to-image generation.
+        Previous evaluations treat caption quality as a single scalar, conflating two distinct properties:
+        how much visual information a caption covers, and how reliably the image supports its stated claims.
+        We introduce <strong>CAPEval</strong> (Coverage And Precision Evaluation), a decoupled caption evaluation benchmark
+        with human-written ground-truth captions and human-verified atomic checklist items.
+        CAPEval reports <span class="metric-c">Coverage (C)</span> — how thoroughly a caption covers ground-truth factual content —
+        and <span class="metric-p">Precision (P)</span> — the factual correctness rate of claims expressed in the caption.
+        Controlled downstream experiments with ten captioners show a consistent task-dependent dissociation:
+        <strong>Coverage</strong> is the stronger correlate for understanding, while <strong>Precision</strong> dominates generation.
+      </p>
+    </section>
+
+    <section class="section" id="overview">
+      <h2>Overview</h2>
+      <p class="prose lead">
+        CAPEval builds dense atomic checklists from high-resolution images and long-form GT captions,
+        scores each captioner with a checklist judge to obtain C and P, then runs controlled VLM / T2I training
+        where the caption source is the only variable.
+      </p>
+      <figure class="figure">
+        <img src="assets/figure1.png?v=20260730b" alt="Figure 1: Overview of CAPEval benchmark, scoring, and downstream protocol" />
+        <figcaption>
+          <strong>Figure 1.</strong> CAPEval constructs fine-grained checklists, scores captions into Coverage and Precision,
+          and links caption quality to downstream understanding (U) and generation (G).
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="metrics">
+      <h2>Metrics</h2>
+      <div class="metric-row">
+        <div class="metric-block metric-block-c">
+          <h3>Coverage <span class="metric-c">C</span></h3>
+          <p>How much of the checklist information is covered by the caption (<code>yes</code> or <code>no</code> vs. <code>not_mentioned</code>).</p>
+        </div>
+        <div class="metric-block metric-block-p">
+          <h3>Precision <span class="metric-p">P</span></h3>
+          <p>Among checklist items the caption mentions, how often the claim is factually correct (<code>yes</code> vs. <code>no</code>).</p>
+        </div>
+      </div>
+      <p class="prose">
+        Public scores are reported on a <strong>0–100</strong> percent scale.
+        See the <a href="https://github.com/liuzhipenggg/CAPEval">GitHub README</a> for the exact formulas and evaluation code.
+      </p>
+    </section>
+
+    <section class="section" id="findings">
+      <h2>Key findings</h2>
+      <ol class="findings">
+        <li>
+          <strong>Caption quality profile matters more than model scale.</strong>
+          Within InternVL3.5, smaller captioners can outperform larger ones when C / P better match the downstream objective.
+        </li>
+        <li>
+          <strong>Understanding is dominated by Coverage.</strong>
+          Broader semantic coverage is the consistent predictor of VLM understanding performance.
+        </li>
+        <li>
+          <strong>Generation is driven by Precision.</strong>
+          Factual precision is the significant predictor of T2I generation quality across captioners.
+        </li>
+      </ol>
+      <figure class="figure">
+        <img src="assets/figure2.png?v=20260801" alt="Figure 2: Coverage drives understanding; Precision drives generation" />
+        <figcaption>
+          <strong>Figure 2.</strong> Task-dependent asymmetry: better Coverage → understanding; better Precision → generation.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="benchmark">
+      <h2>Benchmark</h2>
+      <ul class="stat-list">
+        <li><strong>300</strong> high-resolution images (up to 8K)</li>
+        <li><strong>~346</strong> words / GT caption on average</li>
+        <li><strong>~50</strong> atomic checklist items / image · <strong>14,965</strong> items total</li>
+        <li><strong>8</strong> semantic dimensions: Instance, Attribute, Relation, Image, Text, Human, UI, World Knowledge</li>
+        <li><strong>4</strong> super-categories: Scene &amp; Object · People &amp; Activity · Text &amp; Interface · Design &amp; Knowledge</li>
+      </ul>
+      <p class="prose">
+        Download the dataset on
+        <a href="https://huggingface.co/datasets/LiuzhipengUCAS/CAPEval">Hugging Face</a>
+        or clone the
+        <a href="https://github.com/liuzhipenggg/CAPEval">code repository</a>.
+        Public captioner C / P rankings:
+        <a href="leaderboard/">Leaderboard</a>.
+      </p>
+    </section>
+
+    <section class="section" id="citation">
+      <h2>Citation</h2>
+      <pre class="bib"><code>@misc{capeval2026,
+  title        = {CAPEval: A Decoupled Caption Evaluation across Understanding and Generation},
+  author       = {Zhipeng Liu, Haochen Wang, Zhaoxiang Zhang},
+  year         = {2026},
+  howpublished = {\url{https://github.com/liuzhipenggg/CAPEval}},
+  note         = {Paper / arXiv TBD},
+}</code></pre>
+    </section>
+
+    <footer class="footer">
+      CAPEval · Apache-2.0 ·
+      <a href="https://github.com/liuzhipenggg/CAPEval">GitHub</a> ·
+      <a href="leaderboard/">Leaderboard</a> ·
+      <a href="https://huggingface.co/datasets/LiuzhipengUCAS/CAPEval">Hugging Face</a>
+    </footer>
+  </div>
+</body>
+</html>

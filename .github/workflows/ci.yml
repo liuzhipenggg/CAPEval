@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python compile
+        run: |
+          set -euo pipefail
+          python3 -m compileall -q caption.py score.py evaluate.py pipeline.py capeval tests
+
+      - name: Smoke tests
+        run: python3 -m unittest discover -s tests -v

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAPEval Leaderboard</title>
+  <meta name="description" content="CAPEval public leaderboard: Coverage (C) and Precision (P)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css?v=20260730c" />
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a href="../"><img class="logo" src="../assets/logo.png" alt="CAPEval" /></a>
+      <div class="nav-links">
+        <a href="../">Home</a>
+        <a href="./" aria-current="page">Leaderboard</a>
+        <a href="https://huggingface.co/datasets/LiuzhipengUCAS/CAPEval">Dataset</a>
+        <a href="https://github.com/liuzhipenggg/CAPEval">Code</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow">Leaderboard</span>
+      <h1>Public CAPEval ranking</h1>
+      <p>
+        Sort by <span class="metric-c">Coverage (C)</span> or
+        <span class="metric-p">Precision (P)</span>
+        (0–100). Default: C descending.
+      </p>
+    </header>
+
+    <section class="panel" aria-labelledby="board-title">
+      <div class="panel-head">
+        <h2 id="board-title">Models</h2>
+        <div class="meta" id="updated">Loading…</div>
+      </div>
+
+      <div class="controls" role="group" aria-label="Sort by">
+        <button class="chip" type="button" data-sort="C" aria-pressed="true">Sort by C</button>
+        <button class="chip" type="button" data-sort="P" aria-pressed="false">Sort by P</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Model</th>
+              <th class="num sortable" scope="col" data-sort="C" aria-sort="descending">C</th>
+              <th class="num sortable" scope="col" data-sort="P" aria-sort="none">P</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Data file: <a href="data.json"><code>data.json</code></a>.
+    </footer>
+  </div>
+
+  <script>
+    const state = { key: "C", dir: "desc", entries: [] };
+
+    function fmt(n) {
+      return Number(n).toFixed(2).replace(/\.00$/, ".0").replace(/(\.\d)0$/, "$1");
+    }
+
+    function sorted() {
+      const mul = state.dir === "asc" ? 1 : -1;
+      return [...state.entries].sort((a, b) => {
+        const d = (a[state.key] - b[state.key]) * mul;
+        return d !== 0 ? d : a.model.localeCompare(b.model);
+      });
+    }
+
+    function render() {
+      const body = document.getElementById("rows");
+      body.innerHTML = sorted().map((e, i) => `
+        <tr>
+          <td class="rank">${i + 1}</td>
+          <td>
+            <div class="model">
+              <span class="dot ${e.family || ""}" aria-hidden="true"></span>
+              <span>${e.model}</span>
+            </div>
+          </td>
+          <td class="num">${fmt(e.C)}</td>
+          <td class="num">${fmt(e.P)}</td>
+        </tr>
+      `).join("");
+
+      document.querySelectorAll(".chip").forEach((btn) => {
+        btn.setAttribute("aria-pressed", String(btn.dataset.sort === state.key));
+      });
+      document.querySelectorAll("th.sortable").forEach((th) => {
+        th.setAttribute(
+          "aria-sort",
+          th.dataset.sort === state.key
+            ? (state.dir === "asc" ? "ascending" : "descending")
+            : "none"
+        );
+      });
+    }
+
+    function setSort(key) {
+      if (state.key === key) {
+        state.dir = state.dir === "desc" ? "asc" : "desc";
+      } else {
+        state.key = key;
+        state.dir = "desc";
+      }
+      render();
+    }
+
+    document.querySelectorAll(".chip, th.sortable").forEach((el) => {
+      el.addEventListener("click", () => setSort(el.dataset.sort));
+    });
+
+    fetch("./data.json")
+      .then((r) => {
+        if (!r.ok) throw new Error("Failed to load data.json");
+        return r.json();
+      })
+      .then((data) => {
+        state.entries = data.entries || [];
+        const updated = data.updated ? `Updated ${data.updated}` : "";
+        const notes = data.notes || "";
+        document.getElementById("updated").textContent = [updated, notes].filter(Boolean).join(" · ");
+        render();
+      })
+      .catch((err) => {
+        document.getElementById("updated").textContent = String(err);
+      });
+  </script>
+</body>
+</html>

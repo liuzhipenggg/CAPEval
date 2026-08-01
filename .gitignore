@@ -1,0 +1,44 @@
+outputs/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+.venv-glm/
+venv/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*~
+*.bak
+*.orig
+*.swp
+.DS_Store
+.idea/
+.vscode/
+.cursor/
+.ipynb_checkpoints/
+
+# caches
+.cache/
+
+# large local model/checkpoint artifacts
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+*.zip
+*.tar
+*.tar.gz
+
+# refactor scratch
+.refactor_backup/
+
+# generated integration artifacts (machine-local paths)
+integrations/lmms_eval/capeval_local.yaml
+integrations/lmms_eval/data/capeval_infer.jsonl
+integrations/exports/

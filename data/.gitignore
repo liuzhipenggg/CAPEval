@@ -1,0 +1,3 @@
+# Local-only scratch (never commit raw conversion backups)
+_backup_pre_clean/
+.DS_Store

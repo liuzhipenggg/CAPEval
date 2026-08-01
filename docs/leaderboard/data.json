@@ -1,0 +1,21 @@
+{
+  "updated": "2026-07-30",
+  "metrics": ["C", "P"],
+  "notes": "Preliminary C/P from checklist judging (0–100). GitHub Pages goes live after the repo is public.",
+  "entries": [
+    {"model": "Gemini-3.1-Pro", "family": "gemini", "C": 80.2, "P": 82.5},
+    {"model": "Gemini-3.5-Flash", "family": "gemini", "C": 78.1, "P": 81.4},
+    {"model": "Gemini-2.5-Pro", "family": "gemini", "C": 75.5, "P": 80.1},
+    {"model": "GPT-5.5", "family": "gpt", "C": 72.8, "P": 79.0},
+    {"model": "Qwen3-VL-32B", "family": "qwen", "C": 68.5, "P": 86.1},
+    {"model": "Qwen3-VL-8B", "family": "qwen", "C": 63.2, "P": 83.5},
+    {"model": "GLM-4.6V-Flash", "family": "glm", "C": 62.0, "P": 85.4},
+    {"model": "Qwen3-VL-4B", "family": "qwen", "C": 60.2, "P": 81.1},
+    {"model": "InternVL3.5-38B", "family": "internvl", "C": 48.6, "P": 77.7},
+    {"model": "InternVL3.5-1B", "family": "internvl", "C": 48.3, "P": 65.2},
+    {"model": "InternVL3.5-8B", "family": "internvl", "C": 46.5, "P": 72.6},
+    {"model": "InternVL3.5-4B", "family": "internvl", "C": 45.0, "P": 73.5},
+    {"model": "LLaVA-OV-1.5-4B", "family": "llava", "C": 43.5, "P": 45.1},
+    {"model": "LLaVA-OV-1.5-8B", "family": "llava", "C": 41.2, "P": 50.4}
+  ]
+}

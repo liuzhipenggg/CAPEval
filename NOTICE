@@ -1,0 +1,7 @@
+CAPEval
+=======
+
+Library: ``capeval/`` (caption engine, LLM checklist judge, io).
+CLI: ``python caption.py``, ``python score.py``, ``python pipeline.py``.
+
+Derived from VLMEvalKit-style evaluation tooling. See LICENSE.

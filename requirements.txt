@@ -1,0 +1,21 @@
+# CAPEval dependencies. Keep transformers 4.x + huggingface-hub 0.x aligned:
+# hub>=1 breaks `import transformers` on the current stable 4.x line, and CAPEval
+# used to report that as a misleading "transformers is not installed".
+#
+# torch / vllm are CUDA-stack specific — install a mutually importable pair for your
+# cluster (see https://docs.vllm.ai/), then verify:
+#   python -c "import vllm, transformers, huggingface_hub as h; print(h.__version__)"
+
+tqdm>=4.66.0,<5
+Pillow>=10.0.0,<12
+openai>=1.40.0,<2
+PyYAML>=6.0.1,<7
+pandas>=2.1.0,<3
+datasets>=2.19.0,<4
+
+transformers>=4.48.0,<5
+huggingface-hub>=0.34.0,<1.0.0
+
+# Optional local GPU backends (pin/build against your CUDA):
+# torch
+# vllm
