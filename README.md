@@ -15,13 +15,13 @@
 
 ## 🔥 News
 
+- **[2026-08]** 📄 Paper on arXiv: https://arxiv.org/abs/2608.02589
 - **[2026-07]** 🏆 Project page & leaderboard: https://liuzhipenggg.github.io/CAPEval/
-- **[TBD]** 📄 Paper release (arXiv).
 - **[2026-07]** 💻 Code released: captioning, checklist judging, and C / P evaluation.
 
 ## 📎 Resources
 
-- 📄 **Paper**: *[Coming soon]*
+- 📄 **Paper**: [arXiv:2608.02589](https://arxiv.org/abs/2608.02589)
 - 🌐 **Project page**: https://liuzhipenggg.github.io/CAPEval/
 - 🤗 **Hugging Face Dataset**: [LiuzhipengUCAS/CAPEval](https://huggingface.co/datasets/LiuzhipengUCAS/CAPEval)
 - 🏆 **Leaderboard**: https://liuzhipenggg.github.io/CAPEval/leaderboard/
@@ -176,12 +176,14 @@ Official site: https://liuzhipenggg.github.io/CAPEval/leaderboard/
 ## 📚 Citation
 
 ```bibtex
-@misc{capeval2026,
-  title        = {CAPEval: A Decoupled Caption Evaluation across Understanding and Generation},
-  author       = {Zhipeng Liu, Haochen Wang, Zhaoxiang Zhang},
-  year         = {2026},
-  howpublished = {\url{https://github.com/liuzhipenggg/CAPEval}},
-  note         = {Paper / arXiv TBD},
+@misc{liu2026capeval,
+  title         = {CAPEval: A Decoupled Caption Evaluation across Understanding and Generation},
+  author        = {Zhipeng Liu, Haochen Wang, Zhaoxiang Zhang},
+  year          = {2026},
+  eprint        = {2608.02589},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2608.02589},
 }
 ```
 
