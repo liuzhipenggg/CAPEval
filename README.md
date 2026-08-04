@@ -176,14 +176,14 @@ Official site: https://liuzhipenggg.github.io/CAPEval/leaderboard/
 ## 📚 Citation
 
 ```bibtex
-@misc{liu2026capeval,
-  title         = {CAPEval: A Decoupled Caption Evaluation across Understanding and Generation},
-  author        = {Zhipeng Liu, Haochen Wang, Zhaoxiang Zhang},
-  year          = {2026},
-  eprint        = {2608.02589},
-  archivePrefix = {arXiv},
-  primaryClass  = {cs.CV},
-  url           = {https://arxiv.org/abs/2608.02589},
+@misc{liu2026capevaldecoupledcaptionevaluation,
+      title={CAPEval: A Decoupled Caption Evaluation across Understanding and Generation}, 
+      author={Zhipeng Liu and Haochen Wang and Zhaoxiang Zhang},
+      year={2026},
+      eprint={2608.02589},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2608.02589}, 
 }
 ```
 
